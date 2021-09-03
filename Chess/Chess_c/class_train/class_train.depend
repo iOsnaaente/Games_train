@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1616300826 source:d:\desktop\git\chess_train\class_train\main.c
+	<stdio.h>
+	<stdlib.h>
+	"pieces.h"
+	"moves.h"
+
+1616300185 d:\desktop\git\chess_train\class_train\pieces.h
+
+1616362923 d:\desktop\git\chess_train\class_train\moves.h
+
