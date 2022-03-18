@@ -19,19 +19,6 @@ SPINS_THICKNESS = 20
 VEL_ANGULAR     = 10
 POS_REF         = 0
 FRICTION        = 0.01 
-
-SHOW_COLOR_PICKER  = False 
-
-def show_or_hide_color_picker(sender, data, user ): 
-    global SHOW_COLOR_PICKER
-    if SHOW_COLOR_PICKER:
-        dpg.show_item( 'Color_picker_color' )
-        dpg.show_item( 'Color_picker_fill' )
-    else:
-        dpg.hide_item( 'Color_picker_color' )
-        dpg.hide_item( 'Color_picker_fill' )
-    
-    SHOW_COLOR_PICKER = not SHOW_COLOR_PICKER
         
 def get_force(sender, data, user ):
     global VEL_ANGULAR
@@ -39,17 +26,11 @@ def get_force(sender, data, user ):
     while dpg.is_mouse_button_down( dpg.mvMouseButton_Left ):
         pass 
     pos_f = dpg.get_mouse_pos()
-    
-    center = [ dpg.get_item_width('mainWindow')/2, dpg.get_item_height('mainWindow')/2 ]
-    pos_i[0] -= center[0]
-    pos_f[0] -= center[0]
-    pos_i[1] = center[1] - pos_i[1]
-    pos_f[1] = center[1] - pos_f[1]
 
     if pos_i[0]-pos_f[0] == 0  and pos_i[1]-pos_f[1] == 0 :
         pass 
     else: 
-        ri =math.sqrt( pos_i[0]**2 + pos_i[1]**2 )
+        ri = math.sqrt( pos_i[0]**2 + pos_i[1]**2 )
         rf = math.sqrt( pos_f[0]**2 + pos_f[1]**2 )
         oi = math.atan(pos_i[1]/pos_i[0] if pos_i[0] != 0 else 0 )
         of = math.atan(pos_f[1]/pos_f[0] if pos_f[0] != 0 else 0 )
@@ -125,13 +106,12 @@ with dpg.window( id = 'mainWindow', width= 800, height= 500 ):
         dpg.add_menu_item( label = 'Stop spinner', callback = stop_spinner )
         dpg.add_menu_item( label = 'Increase pins', callback = increase_spinner_pins )
         dpg.add_menu_item( label = 'Decrease pins', callback = decrease_spinner_pins )
-        dpg.add_menu_item( label = 'Spinner color', callback = show_or_hide_color_picker )
+        with dpg.menu( label = 'Spinner color menu' ):        
+            dpg.add_color_edit( id = 'Color_picker_color', callback=change_spinner_color)
+            dpg.add_color_edit( id = 'Color_picker_fill' , callback=change_spinner_fill_color)
+        #dpg.add_menu_item( label = 'Spinner color', callback = show_or_hide_color_picker )
 
     w, h = dpg.get_item_width('mainWindow'), dpg.get_item_height('mainWindow')
-    dpg.add_color_edit( id = 'Color_picker_color', callback=change_spinner_color)
-    dpg.add_color_edit( id = 'Color_picker_fill', callback=change_spinner_fill_color)
-    dpg.hide_item('Color_picker_color')
-    dpg.hide_item('Color_picker_fill')
     with dpg.drawlist( id='SpinnerDrawlist', width= w*0.95, height= h*0.95, pos=[w*0.025, h*0.025] ):
         for spin in range(MAX_SPINS):
             center = [w/2 + SPINS_RADIUS*math.cos( math.radians(spin*SPINS_OFFSET)) , h/2 + SPINS_RADIUS*math.sin( math.radians(spin*SPINS_OFFSET)) ]
