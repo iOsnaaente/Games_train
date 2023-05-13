@@ -95,7 +95,7 @@ class Cube():
                 for piece in row:
                     if piece == center:
                         correct_positions += 1
-        self.__score = int(correct_positions / 54)*100
+        self.__score = round( ( correct_positions / 54 ) *100, 2 )
         return self.__score
 
     ''' Printa o cubo no terminal '''
@@ -255,7 +255,8 @@ if __name__ == '__main__':
         cube.show() 
         
         num_mv = cube.get_moviments() 
-        print( num_mv )
+        fitness = cube.fitness()
+        print( 'Numero de movimentos:', num_mv, '\nFitness:', fitness  )
         if num_mv > 50:
             print( 'Numero máximo de movimentos atingidos')
             break 

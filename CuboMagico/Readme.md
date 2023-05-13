@@ -1,5 +1,7 @@
 # CUBO MÁGICO
 
+O objetivo é criar um cubo mágico para treino.
+
 ## Tarefas a fazer 
 
 - [x] Criar a matriz dos cubos 
